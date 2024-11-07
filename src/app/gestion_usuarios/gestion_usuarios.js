@@ -1,13 +1,34 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const usuariosTable = document.getElementById('usuariosTable').getElementsByTagName('tbody')[0];
-    const rolesMap = {}; // Mapa para almacenar los roles
-    const estadosMap = {}; // Mapa para almacenar los estados
+    const rolesMap = {};
+    const estadosMap = {};
+    // Verifica el rol del usuario al cargar la página
+    try {
+        const response = await fetch('/api/session');
+        if (!response.ok) {
+            alert('Acceso denegado');
+            window.location.href = '/login/login_component.html';
+            return;
+        }
 
+        const sessionData = await response.json();
+        const allowedRoles = [1, 4, 6]; // Roles permitidos
+        if (!allowedRoles.includes(sessionData.role)) {
+            alert('Acceso denegado');
+            window.location.href = '/login/login_component.html';
+            return;
+        }
+    } catch (error) {
+        console.error('Error al verificar la sesión:', error);
+        alert('Acceso denegado');
+        window.location.href = '/login/login_component.html';
+        return;
+    }
     const refreshTable = async () => {
         try {
             const response = await fetch('/api/usuarios');
             const usuarios = await response.json();
-            usuariosTable.innerHTML = ''; // Limpiar la tabla
+            usuariosTable.innerHTML = '';
 
             usuarios.forEach(usuario => {
                 const row = usuariosTable.insertRow();
@@ -15,16 +36,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 row.insertCell(1).textContent = usuario.primer_nombre;
                 row.insertCell(2).textContent = usuario.segundo_nombre;
                 row.insertCell(3).textContent = usuario.apellido_paterno;
-                row.insertCell(4).textContent = usuario.apellido_materno; // Agregar apellido materno
+                row.insertCell(4).textContent = usuario.apellido_materno;
                 row.insertCell(5).textContent = usuario.correo;
                 row.insertCell(6).textContent = usuario.telefono;
 
-                // Celda de rol
                 const rolCell = row.insertCell(7);
                 const rolSelect = document.createElement('select');
-                rolSelect.id = `rolSelect_${usuario.rut}`; // Asignar un ID único
+                rolSelect.id = `rolSelect_${usuario.rut}`;
 
-                // Llenar los roles en el desplegable
                 for (const [id, desc] of Object.entries(rolesMap)) {
                     const option = document.createElement('option');
                     option.value = id;
@@ -32,15 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     rolSelect.appendChild(option);
                 }
 
-                rolSelect.value = usuario.id_rol; // Establecer el rol actual
+                rolSelect.value = usuario.id_rol; 
                 rolCell.appendChild(rolSelect);
 
-                // Celda de estado
                 const estadoCell = row.insertCell(8);
                 const estadoSelect = document.createElement('select');
-                estadoSelect.id = `estadoSelect_${usuario.rut}`; // Asignar un ID único
+                estadoSelect.id = `estadoSelect_${usuario.rut}`;
 
-                // Llenar los estados en el desplegable
                 for (const [id, desc] of Object.entries(estadosMap)) {
                     const option = document.createElement('option');
                     option.value = id;
@@ -48,10 +65,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     estadoSelect.appendChild(option);
                 }
 
-                estadoSelect.value = usuario.id_estadousuario; // Establecer el estado actual
+                estadoSelect.value = usuario.id_estadousuario;
                 estadoCell.appendChild(estadoSelect);
 
-                // Botón de submit
                 const actionsCell = row.insertCell(9);
                 const submitButton = document.createElement('button');
                 submitButton.textContent = 'Actualizar';
@@ -68,9 +84,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('/api/roles');
             const roles = await response.json();
             roles.forEach(role => {
-                rolesMap[role.id_rol] = role.descripcion_rol; // Ajusta según la estructura de tu tabla de roles
+                rolesMap[role.id_rol] = role.descripcion_rol;
             });
-            refreshTable(); // Llama a refreshTable después de cargar roles
+            refreshTable();
         } catch (error) {
             console.error('Error al cargar roles:', error);
         }
@@ -81,9 +97,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('/api/estados');
             const estados = await response.json();
             estados.forEach(estado => {
-                estadosMap[estado.id_estadousuario] = estado.desc_estadousuario; // Ajusta según la estructura de tu tabla de estados
+                estadosMap[estado.id_estadousuario] = estado.desc_estadousuario;
             });
-            refreshTable(); // Llama a refreshTable después de cargar estados
+            refreshTable();
         } catch (error) {
             console.error('Error al cargar estados:', error);
         }
@@ -111,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
             ]);
             alert('Cambios actualizados con éxito.');
-            refreshTable(); // Actualizar la tabla después de la actualización
+            refreshTable();
         } catch (error) {
             console.error('Error al actualizar:', error);
             alert('Error al actualizar los datos.');
@@ -120,7 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('refreshButton').addEventListener('click', refreshTable);
 
-    // Cargar roles y estados al inicio
     loadRoles();
     loadEstados();
 });

@@ -3,32 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de usuarios</title>
+    <title>Actividades Disponibles</title>
     <a href="../index.html" style="text-decoration: none;">
-        <h1 class="title1" style="text-align: center;">Unidad Vecinal</h1>
+      <h1 class="title1" style="text-align: center;">Unidad Vecinal</h1>
     </a>
-    <style>
-        h1 {
+</head>
+<style>
+    body { 
+      background-image: url('../imagenes/image.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    h1 {
           color: #17f407;
-          font-size: 0px;
-        }
-        h2 {
-            color: #17f407;
-            margin-top: 20px;
-            font-size: 30px;
         }
         body {
           font-family: Arial, Helvetica, sans-serif;
-          background-image: url('../imagenes/image.png');
-          background-repeat: no-repeat;
-          background-size: cover;
         }
-      </style>
+        .grid { 
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
 
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
-
-</head>
+  }
+</style>
 <body>
     <div class="container">
         <div class="flex">
@@ -46,36 +44,15 @@
             </span>
            </div>
        </div>
-    <div class="container-white">
-    <h2 class="title">Gestión de usuarios</h2>
-    <table id="usuariosTable">
-        <thead>
-            <tr>
-                <th>RUT</th>
-                <th>Primer Nombre</th>
-                <th>Segundo Nombre</th>
-                <th>Apellido Paterno</th>
-                <th>Apellido Materno</th>
-                <th>Correo</th>
-                <th>Teléfono</th>
-                <th>Rol</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <!-- Las filas se llenarán dinámicamente -->
-        </tbody>
-    </table>
-    <button id="refreshButton">Refrescar Tabla</button>
-    </div>
-    <script src="gestion_usuarios.js"></script>
+    <div>
+    <h1 class="titleContent">Actividades disponibles</h1>
+    <a class="button-CrearActividad" href="../actividad/crear_actividad.html">Crear actividad</a>
+    <div id="actividadContainer"></div>
+      
+    <script src="ver_actividades.js"></script>
     <script src="../cambio_header.js"></script>
-    <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="../app.component.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
-    <link rel="stylesheet" href="gestion_usuarios.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../actividad/actividad.css">
 </body>
 </html>

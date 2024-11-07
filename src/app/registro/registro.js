@@ -1,5 +1,5 @@
 document.querySelector('form').addEventListener('submit', async (event) => {
-    event.preventDefault(); // Evitar el comportamiento por defecto del formulario
+    event.preventDefault();
 
     const formData = {
         rut: document.getElementById('rut').value
@@ -13,13 +13,31 @@ document.querySelector('form').addEventListener('submit', async (event) => {
         correo: document.getElementById('correo').value,
         telefono: document.getElementById('telefono').value,
         direccion: document.getElementById('direccion').value,
-        password: document.getElementById('password').value
+        fechaNacimiento: document.getElementById('fecha_nacimiento').value,
+        password: document.getElementById('password').value,
+        recibirNotificaciones: document.getElementById('recibir_notificaciones').checked
+
     };
 
-    console.log('Datos a enviar:', formData); // Ver datos en la consola
+    console.log('Datos a enviar:', formData);
+    // Verificar si el usuario es mayor de 14 años
+    const fechaNacimiento = new Date(formData.fechaNacimiento);
+    const hoy = new Date();
+    let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+    const mes = hoy.getMonth() - fechaNacimiento.getMonth();
+    const dia = hoy.getDate() - fechaNacimiento.getDate();
 
+    // Ajustar si el mes/día de hoy es antes que el de nacimiento
+    if (mes < 0 || (mes === 0 && dia < 0)) {
+        edad--;
+    }
+
+    if (edad < 14) {
+        alert("Debes tener al menos 14 años para registrarte.");
+        return;
+    }
     try {
-        const response = await fetch('http://localhost:3000/register', { // Asegúrate de que la URL sea correcta
+        const response = await fetch('http://localhost:3000/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -29,12 +47,13 @@ document.querySelector('form').addEventListener('submit', async (event) => {
 
         if (!response.ok) {
             const result = await response.json();
-            alert(result.message); // Mostrar el mensaje de error recibido del servidor
-            return; // Termina la ejecución si hay un error
+            alert(result.message);
+            return;
         }
 
         const result = await response.json();
-        alert(result.message); // Mostrar mensaje de éxito
+        alert(result.message);
+        window.location.href = 'http://localhost:3000/login/login_component.html';
     } catch (error) {
         console.error('Error al registrar:', error);
         alert('Hubo un error al registrarse. Intenta nuevamente.');

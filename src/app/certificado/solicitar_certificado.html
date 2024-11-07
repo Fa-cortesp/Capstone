@@ -1,33 +1,32 @@
-<!DOCTYPE html>
-<html lang="es">
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de usuarios</title>
-    <a href="../index.html" style="text-decoration: none;">
-        <h1 class="title1" style="text-align: center;">Unidad Vecinal</h1>
+  <meta charset="utf-8">
+  <title>Unidad territorial</title>
+  <a href="../index.html" style="text-decoration: none;">
+    <h1 style="text-align: center;">Unidad Vecinal</h1>
     </a>
-    <style>
-        h1 {
-          color: #17f407;
-          font-size: 0px;
-        }
-        h2 {
-            color: #17f407;
-            margin-top: 20px;
-            font-size: 30px;
-        }
-        body {
-          font-family: Arial, Helvetica, sans-serif;
-          background-image: url('../imagenes/image.png');
-          background-repeat: no-repeat;
-          background-size: cover;
-        }
-      </style>
-
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
-
+  <style>
+    h1 {
+      color: #17f407;
+    }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+  }
+  </style>
+  <script src="../cambio_header.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="../app.component.css">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="certificado.css">
+  <style>
+    body { 
+      background-image: url('../imagenes/image.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  </style>
 </head>
 <body>
     <div class="container">
@@ -38,44 +37,55 @@
          </nav>
         </div>
         <div class="flex">
-            <i class="fas fa-search text-green-500">
-            </i>
-            <span class="ml-2 text-green-500">
-              <input type="text" placeholder="Buscar...">
-              <input type="submit" value="Buscar">
-            </span>
-           </div>
+         <i class="fas fa-search text-green-500">
+         </i>
+         <span class="ml-2 text-green-500">
+           <input type="text" placeholder="Buscar...">
+           <input type="submit" value="Buscar">
+         </span>
+        </div>
        </div>
-    <div class="container-white">
-    <h2 class="title">Gestión de usuarios</h2>
-    <table id="usuariosTable">
-        <thead>
-            <tr>
-                <th>RUT</th>
-                <th>Primer Nombre</th>
-                <th>Segundo Nombre</th>
-                <th>Apellido Paterno</th>
-                <th>Apellido Materno</th>
-                <th>Correo</th>
-                <th>Teléfono</th>
-                <th>Rol</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
 
-        <tbody>
-            <!-- Las filas se llenarán dinámicamente -->
-        </tbody>
-    </table>
-    <button id="refreshButton">Refrescar Tabla</button>
-    </div>
-    <script src="gestion_usuarios.js"></script>
-    <script src="../cambio_header.js"></script>
-    <link rel="stylesheet" href="../styles.css">
-    <link rel="stylesheet" href="../app.component.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
-    <link rel="stylesheet" href="gestion_usuarios.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <div class="container-certificado">
+    <h2>Solicitud de Certificado de Residencia</h2>
+    <form id="certificadoForm">
+        <label for="rut">RUT:</label>
+        <input type="text" id="rut" name="rut" required><br><br>
+
+        <label for="nombre">Nombre Completo:</label>
+        <input type="text" id="nombre" name="nombre" required><br><br>
+
+        <label for="domicilio">Domicilio:</label>
+        <input type="text" id="domicilio" name="domicilio" required><br><br>
+
+        <label for="motivo">Motivo de Solicitud:</label>
+        <select id="motivo" name="motivo" class="w-full p-2 border border-gray-300 rounded dropdownselection" required>
+            <option value="trabajo">Trabajo</option>
+            <option value="estudios">Estudios</option>
+            <option value="otros">Otros</option>
+        </select><br><br>
+        <div id="correoContainer">
+          <label for="correo">Correo (opcional):</label>
+          <input type="email" id="correo" name="correo" placeholder="Ingrese su correo"><br><br>
+
+      </div>  
+        <button type="submit" class="px-8 py-2 border border-gray-300 rounded button">Generar Certificado</button>
+        <label id="successLabel" style="display: none; color: green;"></label>
+              
+    </form>
+
+
+        <p id="mensaje"></p>
+        <script src="solicitar_certificado.js"></script>
+
+    <p>
+        Condiciones:
+        <ul>
+            <li>Condicion 1 -----------------------------</li>
+            <li>Condicion 2 -----------------------------</li>
+            <li>Condicion 3 -----------------------------</li>
+        </ul>
+    </p>
+
 </body>
 </html>

@@ -3,31 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de usuarios</title>
-    <a href="../index.html" style="text-decoration: none;">
-        <h1 class="title1" style="text-align: center;">Unidad Vecinal</h1>
-    </a>
+    <title>Gestión de Inscripciones</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../actividad/actividad.css">
+    <link rel="stylesheet" href="../app.component.css">
+    <script src="../cambio_header.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../actividad/gestionar_inscripciones.js" defer></script>
     <style>
-        h1 {
+    body { 
+      background-image: url('../imagenes/image.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    h1 {
           color: #17f407;
-          font-size: 0px;
-        }
-        h2 {
-            color: #17f407;
-            margin-top: 20px;
-            font-size: 30px;
         }
         body {
           font-family: Arial, Helvetica, sans-serif;
-          background-image: url('../imagenes/image.png');
-          background-repeat: no-repeat;
-          background-size: cover;
         }
-      </style>
+        .grid { 
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
 
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
-
+  }
+    
+    </style>
+    <a href="../index.html" style="text-decoration: none;">
+        <h1 class="title1" style="text-align: center;">Unidad Vecinal</h1>
+      </a>
 </head>
 <body>
     <div class="container">
@@ -46,36 +51,58 @@
             </span>
            </div>
        </div>
+    <div>
     <div class="container-white">
-    <h2 class="title">Gestión de usuarios</h2>
-    <table id="usuariosTable">
+    <h1 class="titleContent">Gestión de Inscripciones</h1>
+    <table class="table" id="inscripcionesTable">
         <thead>
-            <tr>
-                <th>RUT</th>
-                <th>Primer Nombre</th>
-                <th>Segundo Nombre</th>
-                <th>Apellido Paterno</th>
-                <th>Apellido Materno</th>
-                <th>Correo</th>
-                <th>Teléfono</th>
-                <th>Rol</th>
-                <th>Estado</th>
-                <th>Acciones</th>
+            <tr class="row header green">
+                <th class="cell">ID Inscripción</th>
+                <th class="cell">ID Usuario</th>
+                <th class="cell">ID Actividad</th>
+                <th class="cell">Nombre Actividad</th>
+                <th class="cell">Descripción</th>
+                <th class="cell">Cupo</th>
+                <th class="cell">Fecha Actividad</th>
+                <th class="cell">Ubicación</th>
+                <th class="cell">Fecha Creación</th>
+                <th class="cell">ID Estado Inscripción</th>
+                <th class="cell">Fecha Inscripción</th>
+                <th class="cell">Acciones</th>
             </tr>
         </thead>
-
         <tbody>
-            <!-- Las filas se llenarán dinámicamente -->
+            <!-- Las inscripciones se cargarán aquí -->
         </tbody>
     </table>
-    <button id="refreshButton">Refrescar Tabla</button>
+
+    <!-- Modal para confirmar cancelación -->
+    <div id="modal" style="display:none;">
+        <h2>Cancelar Inscripción</h2>
+        <p>¿Estás seguro que deseas cancelar esta inscripción?</p>
+        <textarea id="motivoCancelacion" placeholder="Motivo de la cancelación"></textarea>
+        <button id="confirmarCancelacion">Confirmar</button>
+        <button id="cancelar">Cancelar</button>
     </div>
-    <script src="gestion_usuarios.js"></script>
-    <script src="../cambio_header.js"></script>
-    <link rel="stylesheet" href="../styles.css">
-    <link rel="stylesheet" href="../app.component.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
-    <link rel="stylesheet" href="gestion_usuarios.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <h2 class="titleContent">Historial de inscripciones</h2>
+<table class="table" id="historialInscripcionesTable">
+    <thead>
+        <tr class="row header blue">
+            <th class="cell">ID Inscripción</th>
+            <th class="cell">ID Usuario</th>
+            <th class="cell">ID Actividad</th>
+            <th class="cell">Nombre Actividad</th>
+            <th class="cell">Fecha Actividad</th>
+            <th class="cell">Ubicación</th>
+            <th class="cell">Fecha Inscripción</th>
+            <th class="cell">ID Estado Inscripción</th>
+            <th class="cell">Motivo Cancelación</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- El historial de inscripciones se cargará aquí -->
+    </tbody>
+</table>
+</div>
 </body>
 </html>
